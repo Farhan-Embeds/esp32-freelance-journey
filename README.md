@@ -1,4 +1,3 @@
-@"
 # esp32-freelance-journey
 
 Daily ESP32 practice. Polished projects get pulled out into their own repos later.
