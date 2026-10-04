@@ -8,6 +8,7 @@ const unsigned long DEBOUNCE_MS = 30;
 int lastReading = HIGH;          // last raw reading
 int stableState = HIGH;          // debounced state
 unsigned long lastChangeTime = 0;
+int pressCount = 0;              // number of confirmed presses
 
 void setup() {
   Serial.begin(115200);
@@ -30,10 +31,11 @@ void loop() {
   if (millis() - lastChangeTime >= DEBOUNCE_MS && reading != stableState) {
     stableState = reading;
 
-    if (stableState == LOW) {          // button pressed
+    if (stableState == LOW) {          // confirmed press
+      pressCount++;
       digitalWrite(ledPin, HIGH);
-      Serial.println("LED is on");
-    } else {                           // button released
+      Serial.printf("Press #%d - LED is on\n", pressCount);
+    } else {                           // confirmed release
       digitalWrite(ledPin, LOW);
       Serial.println("LED is off");
     }
